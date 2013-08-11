@@ -9,7 +9,7 @@ As a first problem, I'd like to find a bridge between FSMs and
 RTOS-like tasks / coroutines.
 
 
-Some elements:
+# Some ideas
 
  * C is a die-hard in the embedded programming world.  While a lot is
    possible using C as a compiler target for an exotic DSL, a new
@@ -41,3 +41,20 @@ Some elements:
    bunch of effectively global variables with unclear liveness).
 
 
+# FSMs with lexical scope?
+
+FSMs written in a pure functional language do not exhibit the problem
+an object-oriented FSM would have: unclear liveness of variables.
+
+Most FSMs in practice are EFSMs, Extended Finite State Machines,
+i.e. FSMs with state variables that define current behavior, and some
+extra data that influences behavior only in specific states.  However,
+that data is techncially accessible in states that do not logically
+use it.
+
+It should be possible to translate a functional FSM to a lower level
+object-oriented formulation, keeping the flat, mutable variable
+organization out of the programmer's reach.
+
+It should also be possible to do this directly in C, without changing
+C semantics.
